@@ -19,9 +19,9 @@ import com.web.dto.member.MemberInfo;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class MainController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
 	private MemberServiceImpl memberService;
@@ -39,7 +39,7 @@ public class HomeController {
 	 * @throws SQLException 
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) throws Exception {
+	public String main(Locale locale, Model model) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -50,7 +50,7 @@ public class HomeController {
 		info = memberService.getUserInfo();
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("userInfo",info);
-		return "home";
+		return "main";
 	}
 	
 }
