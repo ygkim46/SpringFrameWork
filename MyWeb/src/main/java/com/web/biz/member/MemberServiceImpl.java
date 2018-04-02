@@ -1,6 +1,7 @@
 package com.web.biz.member;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDaoImpl memberDao;
 
 	@Override
-	public MemberInfo getUserInfo() throws SQLException {
-		return (MemberInfo) memberDao.getUserInfo();
+	public MemberInfo getUserInfo(Map<String, Object> parameterMap) throws SQLException {
+		return (MemberInfo) memberDao.getUserInfo(parameterMap);
 	}
 
 }
