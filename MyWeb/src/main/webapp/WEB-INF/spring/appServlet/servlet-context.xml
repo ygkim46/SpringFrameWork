@@ -27,5 +27,8 @@
  	<beans:bean id="memberDao" class="com.web.dao.member.MemberDaoImpl">
 		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</beans:bean>
+	<beans:bean id="boardDao" class="com.web.dao.board.BoardDaoImpl">
+		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</beans:bean>
 		
 </beans:beans>

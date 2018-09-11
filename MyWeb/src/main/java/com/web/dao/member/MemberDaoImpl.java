@@ -1,5 +1,6 @@
 package com.web.dao.member;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -12,7 +13,16 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 	
 	@Override
 	public MemberInfo getUserInfo(Map<String, Object> parameterMap) {
-		return (MemberInfo)getSqlSession().selectOne("com.web.dao.member.MemberDao.getUserInfo", parameterMap);
+		return (MemberInfo)getSqlSession().selectOne("MemberInfo.getUserInfo", parameterMap);
 	}
 
+	@Override
+	public void insertMemberInfo(Map<String, Object> parameterMap) throws SQLException {
+		getSqlSession().insert("MemberInfo.insertMemberInfo", parameterMap);
+	}
+
+	public int searchMemberInfo(Map<String, Object> parameterMap) {
+		return (Integer)getSqlSession().selectOne("MemberInfo.searchMemberInfo", parameterMap);
+	}
+	
 }

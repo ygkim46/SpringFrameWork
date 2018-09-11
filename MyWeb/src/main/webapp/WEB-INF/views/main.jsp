@@ -47,6 +47,8 @@
 	        	<input type="text" class="form-control" placeholder="id" ng-model="login.id" name="id" required />
 	        	<input type="password" class="form-control" placeholder="password" ng-model="login.password" name="password" required>
 	        	<button type="button" class="btn btn-default js-popover" data-container="body" data-trigger="manual" data-placement="bottom" data-content="아이디 또는 비밀번호를 확인해주세요." ng-click="fn_login()" ng-disabled="loginForm.id.$invalid || loginForm.password.$invalid">로그인</button>
+	        	<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">회원가입</button>
 	        </div>
 	        <div ng-show="'<%=isLogin %>'" class="form-group">
 	        	<span><%=name%> 님 환영합니다.</span>
@@ -54,6 +56,43 @@
 	        </div>
 	      </form>
 	    </div><!-- /.navbar-collapse -->
+	    <!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="joinCtrl">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">회원가입</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form name="form_join">
+				  <div ng-class="divType" class="form-group has-feedback">
+				    <label for="inpt_id">아이디</label>
+				    <input type="text" ng-change="fn_inptIdChkAjax()" aria-describedby="inputError2Status" class="form-control" ng-model="join.id" name="inpt_id" placeholder="아이디을 입력하세요" required />
+				     <span ng-hide="" ng-class="spnType" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				  </div>
+				  <div ng-class="divNmType" class="form-group has-feedback">
+				    <label for="inpt_name">이름</label>
+				    <input type="text" class="form-control" ng-model="join.name" name="inpt_name" placeholder="이름을 입력하세요" required />
+				    <span ng-hide="" ng-class="spnNmType" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				  </div>
+				  <div class="form-group">
+				    <label for="inpt_passwd">암호</label>
+				    <input type="password" class="form-control" ng-model="join.passwd" name="inpt_passwd" placeholder="암호" required />
+				  </div>
+				  <div class="form-group">
+				    <label for="inpt_conf_passwd">암호확인</label>
+				    <input type="password" class="form-control" ng-model="join.conf_passwd" name="inpt_conf_passwd" placeholder="암호확인" required/>
+				  </div>
+				</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" id="btn_close" data-dismiss="modal">닫기</button>
+		        <button type="button" class="btn btn-primary" ng-click="fn_joinPrc()" ng-disabled="form_join.inpt_id.$invalid || form_join.inpt_name.$invalid || form_join.inpt_passwd.$invalid || form_join.inpt_conf_passwd.$invalid">완료</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	    <script>
 	    	var main = angular.module('main',[]);
 	    	
@@ -97,6 +136,59 @@
     				});
 	    		};
 	    	}]);
+	    	
+	    	main.controller("joinCtrl", ['$scope', '$http', function($scope, $http) {
+	    		$scope.fn_inptIdChkAjax = function() {
+	    			var p_id = ''+$scope.join.id;
+	    			var isOK = '';
+	    			if(p_id !='undefined' && p_id.length >= 4) {
+		    			$http({
+		    				method: 'GET',
+		    				url: '/inptIdChkAjax?id='+p_id
+	    				}).success(function (data) {
+	    					// result : true 중복x
+	    					var result = angular.toJson(data['result']);
+	    					if(result == 'true') {
+			    				$scope.divType = 'has-success';
+								$scope.spnType = 'glyphicon-ok';
+			    			} else {
+			    				$scope.divType = 'has-error';
+			    				$scope.spnType = 'glyphicon-remove';
+			    			}
+		    			}).error(function () {
+		    				alert('Error 잠시후 다시 시도해주세요.');
+		    				return false;
+	    				});
+	    			} else {
+	    				$scope.divType = 'has-error';
+	    				$scope.spnType = 'glyphicon-remove';
+	    			}
+	    		};
+	    		
+	    		$scope.fn_joinPrc = function() {
+	    			var p_id = $scope.join.id;
+	    			var p_name = $scope.join.name;
+	    			var p_password = $scope.join.passwd;
+	    			
+	    			$http({
+	    				method: 'POST',
+	    				url: '/joinPrc',
+	    				data: $.param({
+	    					id: p_id,
+	    					name: p_name,
+	    					password: p_password
+	    				}),
+	    				headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+    				}).success(function (data) {
+    					
+	    			}).error(function () {
+	    				alert('Error 잠시후 다시 시도해주세요.');
+	    				return false;
+    				});
+	    			
+	    			$('#btn_close').trigger('click');
+	    		};
+	    	}]);
 	    </script>
 	  </div><!-- /.container-fluid -->
 	</nav>
@@ -104,10 +196,10 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>#</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Username</th>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -137,9 +229,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<button type="button" class="btn btn-default">글작성</button>
-		<button type="button" class="btn btn-default">수정</button>
-		<button type="button" class="btn btn-default">삭제</button>
+		<button type="button" class="btn btn-default" id="btn_write">글작성</button>
+		<button type="button" class="btn btn-default" id="btn_modify">수정</button>
+		<button type="button" class="btn btn-default" id="btn_delete">삭제</button>
 	</div>
   </body>
 </html>

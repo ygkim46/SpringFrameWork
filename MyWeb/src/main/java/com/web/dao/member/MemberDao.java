@@ -7,4 +7,6 @@ import com.web.dto.member.MemberInfo;
 
 public interface MemberDao {
 	public MemberInfo getUserInfo(Map<String, Object> parameterMap) throws SQLException;
+
+	public void insertMemberInfo(Map<String, Object> parameterMap) throws SQLException;
 }

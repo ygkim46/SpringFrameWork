@@ -19,4 +19,18 @@ public class MemberServiceImpl implements MemberService {
 		return (MemberInfo) memberDao.getUserInfo(parameterMap);
 	}
 
+	@Override
+	public void insertMemberInfo(Map<String, Object> parameterMap) throws SQLException {
+		try {
+			memberDao.insertMemberInfo(parameterMap);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public int searchMemberInfo(Map<String, Object> parameterMap) throws SQLException {
+		return memberDao.searchMemberInfo(parameterMap);
+	}
+
 }

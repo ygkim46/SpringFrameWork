@@ -4,9 +4,11 @@
 
     <typeAliases>
         <typeAlias alias="memberInfo" type="com.web.dto.member.MemberInfo"/>
+        <typeAlias alias="boardInfo" type="com.web.dto.board.BoardInfo"/>
     </typeAliases>
     <mappers>
         <mapper resource="mappers/member/MemberInfo.xml" />
+        <mapper resource="mappers/board/BoardInfo.xml" />
     </mappers>
     
 </configuration>

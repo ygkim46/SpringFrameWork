@@ -8,4 +8,7 @@ public interface MemberService {
 
 	public MemberInfo getUserInfo(Map<String, Object> parameterMap) throws Exception;
 	
+	public void insertMemberInfo(Map<String, Object> parameterMap) throws Exception;
+	
+	public int searchMemberInfo(Map<String, Object> parameterMap) throws Exception;
 }
