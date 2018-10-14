@@ -3,20 +3,20 @@
 <mapper namespace="MemberInfo">
 
 	<select id="getUserInfo" parameterType="map" resultType="memberInfo">
-	SELECT ID, NAME
-	  FROM MBR_INFO
-	 WHERE ID = #{id}
-	   AND PASSWORD = #{password}
+	SELECT mbr_id as ID, mbr_nm as NAME
+	  FROM MBR_BASE
+	 WHERE mbr_id = #{id}
+	   AND mbr_pwd = #{password}
 	</select>
 	
 	<insert id="insertMemberInfo" parameterType="map">
-	INSERT INTO MBR_INFO(ID, NAME, PASSWORD) VALUES(#{id}, #{name}, #{password})
+	INSERT INTO MBR_BASE(mbr_id, mbr_nm, mbr_pwd) VALUES(#{mbr_id}, #{name}, #{password})
 	</insert>
 	
 	<select id="searchMemberInfo" parameterType="map" resultType="int">
 	SELECT COUNT(1)
-	  FROM MBR_INFO
-	 WHERE ID = #{id}
+	  FROM MBR_BASE
+	 WHERE mbr_id = #{id}
 	</select>
 	
 </mapper>
