@@ -3,7 +3,7 @@
 <mapper namespace="MemberInfo">
 
 	<select id="getUserInfo" parameterType="map" resultType="memberInfo">
-	SELECT mbr_id as ID, mbr_nm as NAME
+	SELECT mbr_id as ID , mbr_nm as NAME
 	  FROM MBR_BASE
 	 WHERE mbr_id = #{id}
 	   AND mbr_pwd = #{password}
