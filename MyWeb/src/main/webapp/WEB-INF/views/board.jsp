@@ -237,5 +237,43 @@
 	    </script>
 	  </div><!-- /.container-fluid -->
 	</nav>
+	<div ng-controller="boardCtrl">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="row in list">
+					<th>{{row.num}}</th>
+					<td>{{row.title}}</td>
+					<td>{{row.mbr_no}}</td>
+					<td>{{row.reg_dtime}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<nav>
+		  <ul class="pagination">
+		    <li>
+		      <a href="#" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    <li data-ng-repeat="page in pageList"><a href="/getBoardListMain?page={{page}}">{{page}}</a></li>
+		    <li>
+		      <a href="#" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+		<button type="button" class="btn btn-default" id="btn_write">글작성</button>
+		<button type="button" class="btn btn-default" id="btn_modify">수정</button>
+		<button type="button" class="btn btn-default" id="btn_delete">삭제</button>
+	</div> <!-- boardCtrl END -->
   </body>
 </html>

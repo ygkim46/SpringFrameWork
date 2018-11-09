@@ -1,6 +1,7 @@
 package com.web.biz.board;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,13 @@ import com.web.dto.board.BoardInfo;
 public class BoardServiceImpl {
 	@Autowired
 	private BoardDaoImpl boardDao;
-	public ArrayList<BoardInfo> getBoardList() {
+	public List<BoardInfo> getBoardList(Map<String, Object> parameterMap) {
 		// TODO Auto-generated method stub
-		return boardDao.getBoardList();
+		return boardDao.getBoardList(parameterMap);
+	}
+	public long getBoardListCount() {
+		// TODO Auto-generated method stub
+		return boardDao.getBoardListCount();
 	}
 
 }

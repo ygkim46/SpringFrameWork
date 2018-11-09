@@ -3,16 +3,16 @@ package com.web.dto.board;
 import com.sun.jmx.snmp.Timestamp;
 
 public class BoardInfo {
-	private long num;
+	private int seq;
 	private String title;
-	private String writer;
-	private Timestamp reg_time;
+	private String mbr_no;
+	private String reg_dtime;
 	
-	public long getNum() {
-		return num;
+	public int getSeq() {
+		return seq;
 	}
-	public void setNum(long num) {
-		this.num = num;
+	public void setSeq(int seq) {
+		this.seq = seq;
 	}
 	public String getTitle() {
 		return title;
@@ -20,18 +20,17 @@ public class BoardInfo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getWriter() {
-		return writer;
+	public String getMbr_no() {
+		return mbr_no;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setMbr_no(String mbr_no) {
+		this.mbr_no = mbr_no;
 	}
-	public Timestamp getReg_time() {
-		return reg_time;
+	public String getReg_dtime() {
+		return reg_dtime;
 	}
-	public void setReg_time(Timestamp reg_time) {
-		this.reg_time = reg_time;
+	public void setReg_dtime(String reg_dtime) {
+		this.reg_dtime = reg_dtime;
 	}
-
 	
 }
