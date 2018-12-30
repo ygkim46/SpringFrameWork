@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.web.dto.board.BoardInfo"%>
 <html lang="ko" ng-app="main">
   <head>
     <meta charset="utf-8">
@@ -37,7 +40,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="#">@ygkim</a>
+	      <a class="navbar-brand" href="/getBoardListMain">게시판</a>
 	    </div>
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -189,49 +192,50 @@
 	    			$('#btn_close').trigger('click');
 	    		};
 	    	}]);
+	    	
+	    	
+	    	main.controller("boardCtrl",['$scope', '$http', function($scope, $http) {
+	    		
+    			$http({
+    				method: 'GET',
+    				url: '/getBoardList',
+    				data: $.param({
+    				}),
+    				headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+				}).success(function (data) {
+    				$scope.list = data.brdList;
+    				var total = data.totCnt;
+    				var page = data.page;
+    				var rowCnt = data.rowCnt;
+    				var totalPage = Math.ceil(total / rowCnt);
+					var startPage = 0;
+					var endPage = 0;
+    				var curBlock = 0;
+    				var totalBlock = 0;
+    				var pageViewCnt = 5;
+					var pageLenth = 0;
+					var pageArr = [];
+					
+					curBlock = Math.floor((page - 1) / pageViewCnt) + 1;
+					totBlock = Math.ceil(totalPage / pageViewCnt);
+    				curBlock = curBlock > totBlock ? totBlock : curBlock;
+    				startPage = 1 + ((curBlock - 1) * pageViewCnt); 
+    				endPage = curBlock == totBlock ? startPage + parseInt(totalPage%pageViewCnt) - 1 : startPage + pageViewCnt - 1;
+    				pageLen = endPage - startPage + 1;
+    				
+    				for(var i=0; i<pageLen; i++) {
+    					pageArr[i] = startPage++;
+    				}
+    				
+    				$scope.pageList = pageArr;
+    				
+    			}).error(function () {
+    				alert('Error 잠시후 다시 시도해주세요.');
+    				return false;
+				});
+	    	}]);
 	    </script>
 	  </div><!-- /.container-fluid -->
 	</nav>
-	<div>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th>1</th>
-					<td>b</td>
-					<td>c</td>
-					<td>c</td>
-				</tr>
-				<tr>
-					<th>2</th>
-					<td>b</td>
-					<td>c</td>
-					<td>c</td>
-				</tr>
-				<tr>
-					<th>3</th>
-					<td>b</td>
-					<td>c</td>
-					<td>c</td>
-				</tr>
-				<tr>
-					<th>4</th>
-					<td>b</td>
-					<td>c</td>
-					<td>c</td>
-				</tr>
-			</tbody>
-		</table>
-		<button type="button" class="btn btn-default" id="btn_write">글작성</button>
-		<button type="button" class="btn btn-default" id="btn_modify">수정</button>
-		<button type="button" class="btn btn-default" id="btn_delete">삭제</button>
-	</div>
   </body>
 </html>
