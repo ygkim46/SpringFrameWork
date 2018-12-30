@@ -131,13 +131,39 @@ public class MainController {
 	
 	@RequestMapping(value = "/getBoardList", method = RequestMethod.GET)
 	public void getBoardList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		int page = (Integer) (request.getParameter("page") == null ? 1 : request.getParameter("page"));
+		String rowCnt = request.getParameter("rowCnt") == null ? "10" : request.getParameter("rowCnt");
+		parameterMap.put("rowPerIdx", Integer.parseInt(rowCnt));
+		parameterMap.put("pageIdx",page);
+		
 		JSONObject obj = new JSONObject();
-		
-		ArrayList<BoardInfo> list = new ArrayList<BoardInfo>();
+		List<BoardInfo> list = new ArrayList<BoardInfo>();
 
-		list = boradService.getBoardList();
+		long totCnt = boradService.getBoardListCount();
 		
+		list = boradService.getBoardList(parameterMap);
+		
+		JSONArray arr = new JSONArray();
+		if(list != null && list.size() > 0) {
+			for(BoardInfo info : list) {
+				JSONObject obj2 = new JSONObject();
+				obj2.put("num", info.getSeq());
+				obj2.put("mbr_no", info.getMbr_no());
+				obj2.put("title", info.getTitle());
+				obj2.put("reg_dtime",info.getReg_dtime());
+				arr.add(obj2);
+			}
+		}
+		obj.put("brdList", arr);
+		obj.put("totCnt", totCnt);
+		obj.put("page", page);
+		obj.put("rowCnt", rowCnt);
 		response.getWriter().write(obj.toJSONString());
 	}
 	
+	@RequestMapping(value = "/getBoardListMain", method = RequestMethod.GET)
+	public String getBoardListMain(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		return "board";
+	}
 }
