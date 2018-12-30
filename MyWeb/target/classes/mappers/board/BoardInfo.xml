@@ -3,8 +3,19 @@
 <mapper namespace="BoardInfo">
 
 	<select id="getBoardList" parameterType="map" resultType="boardInfo">
-	SELECT *
-	  FROM BOARD_INFO
+	SELECT B.*
+	  FROM ( SELECT *
+    			, CEIL(@RNUM / #{rowPerIdx}) PAGEIDX
+    			, @RNUM := @RNUM + 1 AS ORDER_RNUM 
+ 			  FROM BOARD_BASE A, (SELECT @RNUM := 1) R
+			 WHERE 1=1
+			 ORDER BY SEQ
+	  ) B
+	 WHERE PAGEIDX = #{pageIdx}
+	</select>
+	
+	<select id="getBoardListCount" parameterType="map" resultType="java.lang.Long">
+	SELECT count(1) FROM BOARD_BASE
 	</select>
 	
 </mapper>
