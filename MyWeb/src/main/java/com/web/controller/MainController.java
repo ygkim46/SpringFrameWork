@@ -36,7 +36,10 @@ import com.web.dto.member.MemberInfo;
  */
 @Controller
 public class MainController {
+	/* hotfix 긴급수정 */
 	/* 주석 1 */
+	/* 머지됨 */
+	/* 머지인가 */
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
