@@ -41,6 +41,7 @@ public class MainController {
 	/* 머지됨 */
 	/* 머지인가 */
 	/* test1 */
+	/* test2 */
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
